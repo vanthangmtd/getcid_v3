@@ -1,8 +1,12 @@
-﻿var listItem = new Array("tbxIID", "btnGetcid", "btnCopyCid", "btnCopyCidA_H", "cbbVersion", "btnCopyCMD", "tarCMD");
+var listItem = new Array("tbxIID", "tbxIIDPro", "tbxTokenPro", "btnGetcidPro", "btnGetcid", "btnCopyCid", "btnCopyCidA_H", "cbbVersion", "btnCopyCMD", "tarCMD");
 
 $(window).on("load",
     function () {
         $("#tbxIID").on("change paste input", function (e) {
+            var t = this.value.replace(/\D/g, "");
+            54 == t.length || 63 == t.length ? (this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-")) : (this.value = t);
+        });
+        $("#tbxIIDPro").on("change paste input", function (e) {
             var t = this.value.replace(/\D/g, "");
             54 == t.length || 63 == t.length ? (this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-")) : (this.value = t);
         });
@@ -39,11 +43,13 @@ function CleanDisableLoading() {
     $("#tbxCid").val("Loadding...");
     CleanData();
     ShowLoadingButton("btnGetcid");
+    ShowLoadingButton("btnGetcidPro");
     DisableItem(listItem);
 }
 
 function Enable() {
     RestoreButton("btnGetcid", "GET");
+    RestoreButton("btnGetcidPro", "GET");
     EnableItem(listItem);
 }
 
@@ -54,47 +60,11 @@ function GetCid(iid) {
         headers: {
             'grecaptcha': grecaptcha.getResponse(),
             'authenToken': content
-        }
+        },
+        timeout: 200000
     })
         .done(function (result, status, xhr) {
-            if (result.Status == "Success") {
-                var resultCid = result.Result;
-                if (resultCid.length == 48) {
-                    $("#tbxCid").val(resultCid);
-                    $("#tbxCidA").val(resultCid.substring(0, 6));
-                    $("#tbxCidB").val(resultCid.substring(6, 12));
-                    $("#tbxCidC").val(resultCid.substring(12, 18));
-                    $("#tbxCidD").val(resultCid.substring(18, 24));
-                    $("#tbxCidE").val(resultCid.substring(24, 30));
-                    $("#tbxCidF").val(resultCid.substring(30, 36));
-                    $("#tbxCidG").val(resultCid.substring(36, 42));
-                    $("#tbxCidH").val(resultCid.substring(42, 48));
-                    $("#tarCMD").val('');
-                    ShowAlert('success', "Get confirmation id success.");
-                }
-                else if (resultCid == "Server too busy.") {
-                    $('#tbxCid').val("Sorry, the website is currently maintaining getcid, please visit it later.");
-                    CleanData();
-                    ShowAlert('danger', resultCid);
-                }
-                else if (resultCid == "Blocked IID." || resultCid == "Exceeded IID.") {
-                    var set_value = "Key blocked. Please contact the unit that provided you with the key for assistance";
-                    $('#tbxCid').val(set_value);
-                    $('#tarCMD').val(set_value);
-                    ShowAlert('success', "Get confirmation id success.");
-                }
-                else {
-                    $('#tbxCid').val(resultCid);
-                    CleanData();
-                    ShowAlert('success', "Get confirmation id success.");
-                }
-                content = xhr.getResponseHeader("authenToken");
-            }
-            else {
-                $('#tbxCid').val(result.Result);
-                CleanData();
-                ShowAlert('danger', result.Result);
-            }
+            SetResult(result, xhr);
             clearInterval(interval);
             grecaptcha.reset();
             Enable();
@@ -106,6 +76,72 @@ function GetCid(iid) {
             $('#tbxCid').val("Unable to connect to the server, please try again later!");
             if (result.status == 403) ShowAlert('danger', "Access denied."); else ShowAlert('danger', "Sorry, cannot connect server.");
         });
+}
+
+function GetCidPro(iid, token) {
+    $.post({
+        url: "/getcid-pro",
+        data: { 'iid': iid, 'token': token },
+        headers: {
+            'grecaptcha': grecaptcha.getResponse(),
+            'authenToken': content
+        },
+        timeout: 200000
+    })
+        .done(function (result, status, xhr) {
+            SetResult(result, xhr);
+            clearInterval(interval);
+            grecaptcha.reset();
+            Enable();
+        })
+        .fail(function (result) {
+            clearInterval(interval);
+            grecaptcha.reset();
+            Enable();
+            $('#tbxCid').val("Unable to connect to the server, please try again later!");
+            if (result.status == 403) ShowAlert('danger', "Access denied."); else ShowAlert('danger', "Sorry, cannot connect server.");
+        });
+}
+
+function SetResult(result, xhr) {
+    if (result.Status == "Success") {
+        var resultCid = result.Result;
+        if (resultCid.length == 48) {
+            $("#tbxCid").val(resultCid);
+            $("#tbxCidA").val(resultCid.substring(0, 6));
+            $("#tbxCidB").val(resultCid.substring(6, 12));
+            $("#tbxCidC").val(resultCid.substring(12, 18));
+            $("#tbxCidD").val(resultCid.substring(18, 24));
+            $("#tbxCidE").val(resultCid.substring(24, 30));
+            $("#tbxCidF").val(resultCid.substring(30, 36));
+            $("#tbxCidG").val(resultCid.substring(36, 42));
+            $("#tbxCidH").val(resultCid.substring(42, 48));
+            $("#tarCMD").val('');
+            ShowAlert('success', "Get confirmation id success.");
+        }
+        else if (resultCid == "Server too busy.") {
+            $('#tbxCid').val("Sorry, the website is currently maintaining getcid, please visit it later.");
+            CleanData();
+            ShowAlert('danger', resultCid);
+        }
+        else if (resultCid == "Blocked IID." || resultCid == "Exceeded IID.") {
+            var set_value = "Key blocked. Please contact the unit that provided you with the key for assistance";
+            $('#tbxCid').val(set_value);
+            $('#tarCMD').val(set_value);
+            ShowAlert('success', "Get confirmation id success.");
+        }
+        else {
+            $('#tbxCid').val(resultCid);
+            CleanData();
+            ShowAlert('success', "Get confirmation id success.");
+        }
+        content = xhr.getResponseHeader("authenToken");
+    }
+    else {
+        $('#tbxCid').val(result.Result);
+        CleanData();
+        ShowAlert('danger', result.Result);
+    }
 }
 
 function GetCommand(cbbVersion, cid) {
@@ -209,6 +245,7 @@ function CopyCommand() {
 
 $(document).ready(function () {
     $("#btnGetcid").click(function () {
+        $("#tbxIIDPro").val('');
         var iid = ValidateIID($("#tbxIID").val());
         var lengthIID = iid.length
         if ((lengthIID === 54) || (lengthIID === 63) && grecaptcha.getResponse().length != 0) {
@@ -227,4 +264,27 @@ $(document).ready(function () {
         }
     });
 
+    $("#btnGetcidPro").click(function () {
+        $("#tbxIID").val('');
+        var iid = ValidateIID($("#tbxIIDPro").val());
+        var token = $("#tbxTokenPro").val();
+        var lengthIID = iid.length
+        if ((lengthIID === 54) || (lengthIID === 63) && token.length != 0 && grecaptcha.getResponse().length != 0) {
+            CleanDisableLoading();
+            Clock();
+            GetCidPro(iid, token);
+        }
+        else if (lengthIID != 54 && lengthIID != 63) {
+            ShowAlert('warning', "Wrong IID.");
+        }
+        else if (token.length == 0) {
+            ShowAlert('warning', "Please enter you token api.");
+        }
+        else if (grecaptcha.getResponse().length === 0) {
+            ShowAlert('warning', "Sorry, cannot get confirmation id.");
+        }
+        else {
+            ShowAlert('warning', "Wrong IID.");
+        }
+    });
 });
