@@ -141,6 +141,9 @@ function SetResult(result, xhr) {
         $('#tbxCid').val(result.Result);
         CleanData();
         ShowAlert('danger', result.Result);
+		if (result.Result == "Sorry, Unable to authenticate") {
+            window.location.reload(true);
+        }
     }
 }
 
