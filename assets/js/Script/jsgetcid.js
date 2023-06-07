@@ -98,8 +98,21 @@ function GetCidPro(iid, token) {
             clearInterval(interval);
             grecaptcha.reset();
             Enable();
-            $('#tbxCid').val("Unable to connect to the server, please try again later!");
-            if (result.status == 403) ShowAlert('danger', "Access denied."); else ShowAlert('danger', "Sorry, cannot connect server.");
+            if (result.status == 524)
+            {
+                $('#tbxCid').val("Sorry, Please try again.");
+                ShowAlert('warning', "Sorry, Please try again.");
+            }
+            else if (result.status == 403)
+            {
+                $('#tbxCid').val("Sorry, Access denied.");
+                ShowAlert('danger', "Access denied.");
+            }
+            else
+            {
+                $('#tbxCid').val("Unable to connect to the server, please try again later!");
+                ShowAlert('danger', "Sorry, cannot connect server.");
+            }
         });
 }
 
