@@ -30,7 +30,7 @@ function Get_category_preview(product_id, category_id) {
 }
 
 function ValidateEmail(inputText) {
-    var mailformat = /^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})+$/;
+    var mailformat = /^([0-9a-zA-Z]([-\._\w]*[0-9a-zA-Z]*[-\._\w])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})+$/;
     if (inputText.match(mailformat)) {
         return true;
     } else {
