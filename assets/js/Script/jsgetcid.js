@@ -95,6 +95,70 @@ function GetCidPro(iid, token) {
             Enable();
         })
         .fail(function (result) {
+            if (result.status == 524)
+            {
+                GetCidProApi(iid, token);
+            }
+            else if (result.status == 403)
+            {
+                clearInterval(interval);
+                grecaptcha.reset();
+                Enable();
+                $('#tbxCid').val("Sorry, Access denied.");
+                ShowAlert('danger', "Access denied.");
+            }
+            else
+            {
+                clearInterval(interval);
+                grecaptcha.reset();
+                Enable();
+                $('#tbxCid').val("Unable to connect to the server, please try again later!");
+                ShowAlert('danger', "Sorry, cannot connect server.");
+            }
+        });
+}
+
+function GetCidProApi(iid, token) {
+    $.get("/api/" + iid + "/" + token + "")
+        .done(function (resultCid) {
+            if (resultCid.length == 48)
+            {
+                $("#tbxCid").val(resultCid);
+                $("#tbxCidA").val(resultCid.substring(0, 6));
+                $("#tbxCidB").val(resultCid.substring(6, 12));
+                $("#tbxCidC").val(resultCid.substring(12, 18));
+                $("#tbxCidD").val(resultCid.substring(18, 24));
+                $("#tbxCidE").val(resultCid.substring(24, 30));
+                $("#tbxCidF").val(resultCid.substring(30, 36));
+                $("#tbxCidG").val(resultCid.substring(36, 42));
+                $("#tbxCidH").val(resultCid.substring(42, 48));
+                $("#tarCMD").val('');
+                ShowAlert('success', "Get confirmation id success.");
+            }
+            else if (resultCid == "Server too busy.")
+            {
+                $('#tbxCid').val("Sorry, the website is currently maintaining getcid, please visit it later.");
+                CleanData();
+                ShowAlert('danger', resultCid);
+            }
+            else if (resultCid == "Blocked IID." || resultCid == "Exceeded IID.")
+            {
+                var set_value = "Key blocked. Please contact the unit that provided you with the key for assistance";
+                $('#tbxCid').val(set_value);
+                $('#tarCMD').val(set_value);
+                ShowAlert('success', "Get confirmation id success.");
+            }
+            else
+            {
+                $('#tbxCid').val(resultCid);
+                CleanData();
+                ShowAlert('success', "Get confirmation id success.");
+            }
+            clearInterval(interval);
+            grecaptcha.reset();
+            Enable();
+        })
+        .fail(function (result) {
             clearInterval(interval);
             grecaptcha.reset();
             Enable();
@@ -113,7 +177,7 @@ function GetCidPro(iid, token) {
                 $('#tbxCid').val("Unable to connect to the server, please try again later!");
                 ShowAlert('danger', "Sorry, cannot connect server.");
             }
-        });
+        })
 }
 
 function SetResult(result, xhr) {
@@ -154,7 +218,7 @@ function SetResult(result, xhr) {
         $('#tbxCid').val(result.Result);
         CleanData();
         ShowAlert('danger', result.Result);
-		if (result.Result == "Sorry, Unable to authenticate") {
+        if (result.Result == "Sorry, Unable to authenticate") {
             window.location.reload(true);
         }
     }
