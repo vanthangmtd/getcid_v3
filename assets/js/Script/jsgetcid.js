@@ -1,4 +1,5 @@
-var listItem = new Array("tbxIID", "tbxIIDPro", "tbxTokenPro", "btnGetcidPro", "btnGetcid", "btnCopyCid", "btnCopyCidA_H", "cbbVersion", "btnCopyCMD", "tarCMD");
+var listItem = new Array("tbxIID", "btnGetcid", "btnCopyCid", "btnCopyCidA_H", "cbbVersion", "btnCopyCMD", "tarCMD");
+//listItem.push("tbxIIDPro", "tbxTokenPro", "btnGetcidPro")
 
 $(window).on("load",
     function () {
@@ -6,10 +7,10 @@ $(window).on("load",
             var t = this.value.replace(/\D/g, "");
             54 == t.length || 63 == t.length ? (this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-")) : (this.value = t);
         });
-        $("#tbxIIDPro").on("change paste input", function (e) {
-            var t = this.value.replace(/\D/g, "");
-            54 == t.length || 63 == t.length ? (this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-")) : (this.value = t);
-        });
+        //$("#tbxIIDPro").on("change paste input", function (e) {
+        //    var t = this.value.replace(/\D/g, "");
+        //    54 == t.length || 63 == t.length ? (this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-")) : (this.value = t);
+        //});
     });
 
 function ValidateIID(iid) {
@@ -43,13 +44,13 @@ function CleanDisableLoading() {
     $("#tbxCid").val("Loadding...");
     CleanData();
     ShowLoadingButton("btnGetcid");
-    ShowLoadingButton("btnGetcidPro");
+    //ShowLoadingButton("btnGetcidPro");
     DisableItem(listItem);
 }
 
 function Enable() {
     RestoreButton("btnGetcid", "GET");
-    RestoreButton("btnGetcidPro", "GET");
+    //RestoreButton("btnGetcidPro", "GET");
     EnableItem(listItem);
 }
 
@@ -325,7 +326,7 @@ function CopyCommand() {
 
 $(document).ready(function () {
     $("#btnGetcid").click(function () {
-        $("#tbxIIDPro").val('');
+        //$("#tbxIIDPro").val('');
         var iid = ValidateIID($("#tbxIID").val());
         var lengthIID = iid.length
         if ((lengthIID === 54) || (lengthIID === 63) && grecaptcha.getResponse().length != 0) {
