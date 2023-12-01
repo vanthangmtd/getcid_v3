@@ -1,5 +1,5 @@
 var listItem = new Array("tbxIID", "btnGetcid", "btnCopyCid", "btnCopyCidA_H", "cbbVersion", "btnCopyCMD", "tarCMD");
-//listItem.push("tbxIIDPro", "tbxTokenPro", "btnGetcidPro")
+listItem.push("tbxIIDPro", "tbxTokenPro", "btnGetcidPro")
 
 $(window).on("load",
     function () {
@@ -7,10 +7,10 @@ $(window).on("load",
             var t = this.value.replace(/\D/g, "");
             54 == t.length || 63 == t.length ? (this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-")) : (this.value = t);
         });
-        //$("#tbxIIDPro").on("change paste input", function (e) {
-        //    var t = this.value.replace(/\D/g, "");
-        //    54 == t.length || 63 == t.length ? (this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-")) : (this.value = t);
-        //});
+        $("#tbxIIDPro").on("change paste input", function (e) {
+            var t = this.value.replace(/\D/g, "");
+            54 == t.length || 63 == t.length ? (this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-")) : (this.value = t);
+        });
     });
 
 function ValidateIID(iid) {
@@ -44,13 +44,13 @@ function CleanDisableLoading() {
     $("#tbxCid").val("Loadding...");
     CleanData();
     ShowLoadingButton("btnGetcid");
-    //ShowLoadingButton("btnGetcidPro");
+    ShowLoadingButton("btnGetcidPro");
     DisableItem(listItem);
 }
 
 function Enable() {
     RestoreButton("btnGetcid", "GET");
-    //RestoreButton("btnGetcidPro", "GET");
+    RestoreButton("btnGetcidPro", "GET");
     EnableItem(listItem);
 }
 
@@ -96,20 +96,17 @@ function GetCidPro(iid, token) {
             Enable();
         })
         .fail(function (result) {
-            if (result.status == 524)
-            {
+            if (result.status == 524) {
                 GetCidProApi(iid, token);
             }
-            else if (result.status == 403)
-            {
+            else if (result.status == 403) {
                 clearInterval(interval);
                 grecaptcha.reset();
                 Enable();
                 $('#tbxCid').val("Sorry, Access denied.");
                 ShowAlert('danger', "Access denied.");
             }
-            else
-            {
+            else {
                 clearInterval(interval);
                 grecaptcha.reset();
                 Enable();
@@ -122,8 +119,7 @@ function GetCidPro(iid, token) {
 function GetCidProApi(iid, token) {
     $.get("/api/" + iid + "/" + token + "")
         .done(function (resultCid) {
-            if (resultCid.length == 48)
-            {
+            if (resultCid.length == 48) {
                 $("#tbxCid").val(resultCid);
                 $("#tbxCidA").val(resultCid.substring(0, 6));
                 $("#tbxCidB").val(resultCid.substring(6, 12));
@@ -136,21 +132,18 @@ function GetCidProApi(iid, token) {
                 $("#tarCMD").val('');
                 ShowAlert('success', "Get confirmation id success.");
             }
-            else if (resultCid == "Server too busy.")
-            {
+            else if (resultCid == "Server too busy.") {
                 $('#tbxCid').val("Sorry, the website is currently maintaining getcid, please visit it later.");
                 CleanData();
                 ShowAlert('danger', resultCid);
             }
-            else if (resultCid == "Blocked IID." || resultCid == "Exceeded IID.")
-            {
+            else if (resultCid == "Blocked IID." || resultCid == "Exceeded IID.") {
                 var set_value = "Key blocked. Please contact the unit that provided you with the key for assistance";
                 $('#tbxCid').val(set_value);
                 $('#tarCMD').val(set_value);
                 ShowAlert('success', "Get confirmation id success.");
             }
-            else
-            {
+            else {
                 $('#tbxCid').val(resultCid);
                 CleanData();
                 ShowAlert('success', "Get confirmation id success.");
@@ -163,18 +156,15 @@ function GetCidProApi(iid, token) {
             clearInterval(interval);
             grecaptcha.reset();
             Enable();
-            if (result.status == 524)
-            {
+            if (result.status == 524) {
                 $('#tbxCid').val("Sorry, Please try again.");
                 ShowAlert('warning', "Sorry, Please try again.");
             }
-            else if (result.status == 403)
-            {
+            else if (result.status == 403) {
                 $('#tbxCid').val("Sorry, Access denied.");
                 ShowAlert('danger', "Access denied.");
             }
-            else
-            {
+            else {
                 $('#tbxCid').val("Unable to connect to the server, please try again later!");
                 ShowAlert('danger', "Sorry, cannot connect server.");
             }
@@ -326,7 +316,7 @@ function CopyCommand() {
 
 $(document).ready(function () {
     $("#btnGetcid").click(function () {
-        //$("#tbxIIDPro").val('');
+        $("#tbxIIDPro").val('');
         var iid = ValidateIID($("#tbxIID").val());
         var lengthIID = iid.length
         if ((lengthIID === 54) || (lengthIID === 63) && grecaptcha.getResponse().length != 0) {
