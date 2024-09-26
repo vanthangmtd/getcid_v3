@@ -137,6 +137,17 @@ function CommandSPTActivate(cbbVersion, key) {
             cmdWindows = cmdWindows + "@mode con: cols=100 lines=30" + "\r\n";
             cmdWindows = cmdWindows + "cscript ospp.vbs /act" + "\r\n";
             break;
+        case "11":
+            cmdWindows = cmdWindows + "set k1=" + key + "" + "\r\n";
+            cmdWindows = cmdWindows + "cls" + "\r\n";
+            cmdWindows = cmdWindows + "if exist \"%ProgramFiles%\\Microsoft Office\\Office16\\ospp.vbs\" cd /d \"%ProgramFiles%\\Microsoft Office\\Office16\"" + "\r\n";
+            cmdWindows = cmdWindows + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\\ospp.vbs\" cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\"" + "\r\n";
+            cmdWindows = cmdWindows + "for /f %i in ('dir /b ..\\root\\Licenses16\\ProPlus2024VL*.xrm-ms') do cscript ospp.vbs /inslic:\"..\\root\\Licenses16\\%i\"" + "\r\n";
+            cmdWindows = cmdWindows + "@echo on&mode con: cols=20 lines=2" + "\r\n";
+            cmdWindows = cmdWindows + "cscript OSPP.VBS /inpkey:%k1%" + "\r\n";
+            cmdWindows = cmdWindows + "@mode con: cols=100 lines=30" + "\r\n";
+            cmdWindows = cmdWindows + "cscript ospp.vbs /act" + "\r\n";
+            break;
         default:
             cmdWindows = "";
     }
