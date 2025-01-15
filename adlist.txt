@@ -122865,6 +122865,7 @@ ff02::3 ip6-allhosts
 0.0.0.0 zpu.samsungelectronics.com
 0.0.0.0 zqtk.net
 0.0.0.0 zy16eoat1w.com
+0.0.0.0 qc.x8.games
 
 # End yoyo.org
 
