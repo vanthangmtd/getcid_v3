@@ -119,7 +119,7 @@ function RestoreButton(idItem, nameItem) {
 }
 
 function ReCaptchaOnFocus() {
-    var script_load = 'https://www.google.com/recaptcha/api.js';
+    var script_load = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
     var loaded = $('script[src="' + script_load + '"]').length;
     if (loaded == 0) {
         var head = document.getElementsByTagName('head')[0]

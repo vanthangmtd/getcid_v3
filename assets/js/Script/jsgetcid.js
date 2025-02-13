@@ -3,13 +3,25 @@ listItem.push("tbxIIDPro", "tbxTokenPro", "btnGetcidPro")
 
 $(window).on("load",
     function () {
-        $("#tbxIID").on("change paste input", function (e) {
+        $("#tbxIID").on("paste input", function (e) {
             var t = this.value.replace(/\D/g, "");
-            54 == t.length || 63 == t.length ? (this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-")) : (this.value = t);
+            if (54 == t.length || 63 == t.length) {
+                this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-");
+                turnstile.reset();
+            }
+            else {
+                this.value = t
+            }
         });
-        $("#tbxIIDPro").on("change paste input", function (e) {
+        $("#tbxIIDPro").on("paste input", function (e) {
             var t = this.value.replace(/\D/g, "");
-            54 == t.length || 63 == t.length ? (this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-")) : (this.value = t);
+            if (54 == t.length || 63 == t.length) {
+                this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-");
+                turnstile.reset();
+            }
+            else {
+                this.value = t
+            }
         });
     });
 
@@ -21,7 +33,7 @@ var recaptchaCallback = function () {
     $.post({
         url: "/recaptcha",
         headers: {
-            'grecaptcha': grecaptcha.getResponse(),
+            'grecaptcha': turnstile.getResponse(),
             'content': content
         }
     });
@@ -59,7 +71,7 @@ function GetCid(iid) {
         url: "/getcid",
         data: { 'iid': iid },
         headers: {
-            'grecaptcha': grecaptcha.getResponse(),
+            'grecaptcha': turnstile.getResponse(),
             'authenToken': content
         },
         timeout: 200000
@@ -67,12 +79,12 @@ function GetCid(iid) {
         .done(function (result, status, xhr) {
             SetResult(result, xhr);
             clearInterval(interval);
-            grecaptcha.reset();
+            turnstile.reset();
             Enable();
         })
         .fail(function (result) {
             clearInterval(interval);
-            grecaptcha.reset();
+            turnstile.reset();
             Enable();
             $('#tbxCid').val("Unable to connect to the server, please try again later!");
             if (result.status == 403) ShowAlert('danger', "Access denied."); else ShowAlert('danger', "Sorry, cannot connect server.");
@@ -84,7 +96,7 @@ function GetCidPro(iid, token) {
         url: "/getcid-pro",
         data: { 'iid': iid, 'token': token },
         headers: {
-            'grecaptcha': grecaptcha.getResponse(),
+            'grecaptcha': turnstile.getResponse(),
             'authenToken': content
         },
         timeout: 200000
@@ -92,7 +104,7 @@ function GetCidPro(iid, token) {
         .done(function (result, status, xhr) {
             SetResult(result, xhr);
             clearInterval(interval);
-            grecaptcha.reset();
+            turnstile.reset();
             Enable();
         })
         .fail(function (result) {
@@ -101,14 +113,14 @@ function GetCidPro(iid, token) {
             }
             else if (result.status == 403) {
                 clearInterval(interval);
-                grecaptcha.reset();
+                turnstile.reset();
                 Enable();
                 $('#tbxCid').val("Sorry, Access denied.");
                 ShowAlert('danger', "Access denied.");
             }
             else {
                 clearInterval(interval);
-                grecaptcha.reset();
+                turnstile.reset();
                 Enable();
                 $('#tbxCid').val("Unable to connect to the server, please try again later!");
                 ShowAlert('danger', "Sorry, cannot connect server.");
@@ -149,12 +161,12 @@ function GetCidProApi(iid, token) {
                 ShowAlert('success', "Get confirmation id success.");
             }
             clearInterval(interval);
-            grecaptcha.reset();
+            turnstile.reset();
             Enable();
         })
         .fail(function (result) {
             clearInterval(interval);
-            grecaptcha.reset();
+            turnstile.reset();
             Enable();
             if (result.status == 524) {
                 $('#tbxCid').val("Sorry, Please try again.");
@@ -319,7 +331,7 @@ $(document).ready(function () {
         $("#tbxIIDPro").val('');
         var iid = ValidateIID($("#tbxIID").val());
         var lengthIID = iid.length
-        if ((lengthIID === 54) || (lengthIID === 63) && grecaptcha.getResponse().length != 0) {
+        if ((lengthIID === 54) || (lengthIID === 63) && turnstile.getResponse().length != 0) {
             CleanDisableLoading();
             Clock();
             GetCid(iid);
@@ -327,7 +339,7 @@ $(document).ready(function () {
         else if (lengthIID != 54 && lengthIID != 63) {
             ShowAlert('warning', "Wrong IID.");
         }
-        else if (grecaptcha.getResponse().length === 0) {
+        else if (turnstile.getResponse().length === 0) {
             ShowAlert('warning', "Sorry, cannot get confirmation id.");
         }
         else {
@@ -340,7 +352,7 @@ $(document).ready(function () {
         var iid = ValidateIID($("#tbxIIDPro").val());
         var token = $("#tbxTokenPro").val();
         var lengthIID = iid.length
-        if ((lengthIID === 54) || (lengthIID === 63) && token.length != 0 && grecaptcha.getResponse().length != 0) {
+        if ((lengthIID === 54) || (lengthIID === 63) && token.length != 0 && turnstile.getResponse().length != 0) {
             CleanDisableLoading();
             Clock();
             GetCidPro(iid, token);
@@ -351,7 +363,7 @@ $(document).ready(function () {
         else if (token.length == 0) {
             ShowAlert('warning', "Please enter you token api.");
         }
-        else if (grecaptcha.getResponse().length === 0) {
+        else if (turnstile.getResponse().length === 0) {
             ShowAlert('warning', "Sorry, cannot get confirmation id.");
         }
         else {
