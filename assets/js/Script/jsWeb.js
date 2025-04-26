@@ -258,6 +258,20 @@ function AddOrUpdateRowDataTable(table_id, id_row_update, value) {
     }
 }
 
+function AddRowDataTable(table_id, id_row_update, value) {
+    var table = $('#' + table_id).DataTable();
+    table.$('tr.choose').removeAttr('style');
+    table.$('tr.choose').removeClass('choose');
+    value[1] = table.rows().count() + 1;
+    var rowNode = table.row.add(value).draw().node();
+    $(rowNode).addClass('choose');
+    $(rowNode).css('background-color', 'silver');
+    for (let i = 0; i < value.length; i++) {
+        $(rowNode).find('td').eq(i).addClass('text-break');
+    }
+    table.order([0, 'asc']).draw();
+}
+
 (function () {
     /**
      * Tinh chỉ số thập phân của một con số.
