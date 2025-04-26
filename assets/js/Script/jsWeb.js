@@ -269,7 +269,7 @@ function AddRowDataTable(table_id, id_row_update, value) {
     for (let i = 0; i < value.length; i++) {
         $(rowNode).find('td').eq(i).addClass('text-break');
     }
-    table.order([0, 'asc']).draw();
+    table.order([1, 'asc']).draw();
 }
 
 (function () {
