@@ -272,6 +272,11 @@ function AddRowDataTable(table_id, id_row_update, value) {
     table.order([1, 'asc']).draw();
 }
 
+function FormatNumber(number){
+	var num = new Number(number);
+	return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
+
 (function () {
     /**
      * Tinh chỉ số thập phân của một con số.
