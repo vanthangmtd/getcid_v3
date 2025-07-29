@@ -136,6 +136,7 @@ function ReCaptchaOnFocus() {
 function DataTableOnLoad() {
     var style_load = 'https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/date-1.1.2/fc-4.1.0/fh-3.2.4/kt-2.7.0/r-2.3.0/rg-1.2.0/rr-1.2.8/sc-2.0.7/sb-1.3.4/sp-2.0.2/sl-1.4.0/sr-1.1.1/datatables.min.css';
     var script_load = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js';
+    var script0_load = 'https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js';
     var script1_load = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js';
     var script2_load = 'https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/date-1.1.2/fc-4.1.0/fh-3.2.4/kt-2.7.0/r-2.3.0/rg-1.2.0/rr-1.2.8/sc-2.0.7/sb-1.3.4/sp-2.0.2/sl-1.4.0/sr-1.1.1/datatables.min.js';
     var loaded = $('script[src="' + script2_load + '"]').length;
@@ -152,6 +153,9 @@ function DataTableOnLoad() {
         var script = document.createElement('script')
         script.type = 'text/javascript';
         script.src = script_load;
+        var script0 = document.createElement('script')
+        script0.type = 'text/javascript';
+        script0.src = script0_load;
         var script1 = document.createElement('script')
         script1.type = 'text/javascript';
         script1.src = script1_load;
@@ -160,6 +164,7 @@ function DataTableOnLoad() {
         script2.src = script2_load
         head.appendChild(style);
         head.appendChild(script);
+        head.appendChild(script0);
         head.appendChild(script1);
         head.appendChild(script2);
         //document.getElementById(item).removeEventListener('focus', DataTableOnLoad(item))
