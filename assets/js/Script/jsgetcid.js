@@ -16,23 +16,11 @@ $(window).on("load",
             var t = this.value.replace(/\D/g, "");
             if (54 == t.length || 63 == t.length) {
                 this.value = t.match(new RegExp(".{1," + t.length / 9 + "}", "g")).join("-");
+				turnstile.reset();
             }
             else {
                 this.value = t
-            }
-        });
-
-        $("#tbxIID").on("change", function (e) {
-            var t = this.value.replace(/\D/g, "");
-            if (54 == t.length || 63 == t.length) {
-                turnstile.reset();
-            }
-        });
-
-        $("#tbxIIDPro").on("change", function (e) {
-            var t = this.value.replace(/\D/g, "");
-            if (54 == t.length || 63 == t.length) {
-                turnstile.reset();
+				turnstile.reset();
             }
         });
     });
