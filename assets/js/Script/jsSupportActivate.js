@@ -73,16 +73,14 @@ function CommandSPTActivate(cbbVersion, key) {
         case "5":
             cmdWindows = cmdWindows + "set k1=" + key + "" + "\r\n";
             cmdWindows = cmdWindows + "cls" + "\r\n";
-            cmdWindows = cmdWindows + "for %a in (4,5,6) do (if exist \"%ProgramFiles%\\Microsoft Office\\Office1%a\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office1%a\")" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles% (x86)\\Microsoft Office\\Office1%a\\ospp.vbs\" (cd /d \"%ProgramFiles% (x86)\\Microsoft Office\\Office1%a\"))" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
             cmdWindows = cmdWindows + "@echo on&mode con: cols=20 lines=2" + "\r\n";
             cmdWindows = cmdWindows + "cscript OSPP.VBS /inpkey:%k1%" + "\r\n";
             cmdWindows = cmdWindows + "@mode con: cols=100 lines=30" + "\r\n";
             cmdWindows = cmdWindows + "cscript ospp.vbs /act" + "\r\n";
             break;
         case "6":
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles%\\Microsoft Office\\Office14\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office14\")" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office14\\ospp.vbs\" (cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office14\")" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
             cmdWindows = cmdWindows + "set k1=" + key + "" + "\r\n";
             cmdWindows = cmdWindows + "cls" + "\r\n";
             cmdWindows = cmdWindows + "@echo on&mode con: cols=20 lines=2" + "\r\n";
@@ -92,8 +90,7 @@ function CommandSPTActivate(cbbVersion, key) {
             cmdWindows = cmdWindows + "start id.txt" + "\r\n";
             break;
         case "7":
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles%\\Microsoft Office\\Office15\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office15\")" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office15\\ospp.vbs\" (cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office15\")" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
             cmdWindows = cmdWindows + "set k1=" + key + "" + "\r\n";
             cmdWindows = cmdWindows + "cls" + "\r\n";
             cmdWindows = cmdWindows + "@echo on&mode con: cols=20 lines=2" + "\r\n";
@@ -103,8 +100,7 @@ function CommandSPTActivate(cbbVersion, key) {
             cmdWindows = cmdWindows + "start id.txt" + "\r\n";
             break;
         case "8":
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles%\\Microsoft Office\\Office16\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office16\")" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\\ospp.vbs\" (cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\")" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
             cmdWindows = cmdWindows + "set k1=" + key + "" + "\r\n";
             cmdWindows = cmdWindows + "cls" + "\r\n";
             cmdWindows = cmdWindows + "@echo on&mode con: cols=20 lines=2" + "\r\n";
@@ -116,10 +112,9 @@ function CommandSPTActivate(cbbVersion, key) {
         case "9":
             cmdWindows = cmdWindows + "set k1=" + key + "" + "\r\n";
             cmdWindows = cmdWindows + "cls" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles%\\Microsoft Office\\Office16\\ospp.vbs\" cd /d \"%ProgramFiles%\\Microsoft Office\\Office16\"" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\\ospp.vbs\" cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\"" + "\r\n";
-            cmdWindows = cmdWindows + "for /f %i in ('dir /b ..\\root\\Licenses16\\ProPlus2019VL_MAK_AE*.xrm-ms') do cscript ospp.vbs /inslic:\"..\\root\\Licenses16\\%i\"" + "\r\n";
-            cmdWindows = cmdWindows + "for /f %i in ('dir /b ..\\root\\Licenses16\\ProPlus2019VL_KMS_Client_AE*.xrm-ms') do cscript ospp.vbs /inslic:\"..\\root\\Licenses16\\%i\"" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b /ad \"%ProgramFiles(x86)%\\Microsoft Office\\Licenses16\" 2^>nul ^|^| dir /s /b /ad \"%ProgramFiles%\\Microsoft Office\\Licenses16\" 2^>nul') do set \"P=%a\"" + "\r\n";
+            cmdWindows = cmdWindows + "For /f %i in ('dir /b \"%P%\\ProPlus2019VL_MAK_AE*.xrm-ms\"') do cscript ospp.vbs /inslic:\"%P%\\%i\"" + "\r\n";
             cmdWindows = cmdWindows + "@echo on&mode con: cols=20 lines=2" + "\r\n";
             cmdWindows = cmdWindows + "cscript OSPP.VBS /inpkey:%k1%" + "\r\n";
             cmdWindows = cmdWindows + "@mode con: cols=100 lines=30" + "\r\n";
@@ -128,10 +123,9 @@ function CommandSPTActivate(cbbVersion, key) {
         case "10":
             cmdWindows = cmdWindows + "set k1=" + key + "" + "\r\n";
             cmdWindows = cmdWindows + "cls" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles%\\Microsoft Office\\Office16\\ospp.vbs\" cd /d \"%ProgramFiles%\\Microsoft Office\\Office16\"" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\\ospp.vbs\" cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\"" + "\r\n";
-            cmdWindows = cmdWindows + "for /f %i in ('dir /b ..\\root\\Licenses16\\ProPlus2021VL_MAK_AE*.xrm-ms') do cscript ospp.vbs /inslic:\"..\\root\\Licenses16\\%i\"" + "\r\n";
-            cmdWindows = cmdWindows + "for /f %i in ('dir /b ..\\root\\Licenses16\\ProPlus2021VL_KMS_Client_AE*.xrm-ms') do cscript ospp.vbs /inslic:\"..\\root\\Licenses16\\%i\"" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b /ad \"%ProgramFiles(x86)%\\Microsoft Office\\Licenses16\" 2^>nul ^|^| dir /s /b /ad \"%ProgramFiles%\\Microsoft Office\\Licenses16\" 2^>nul') do set \"P=%a\"" + "\r\n";
+            cmdWindows = cmdWindows + "For /f %i in ('dir /b \"%P%\\ProPlus2021VL_MAK_AE*.xrm-ms\"') do cscript ospp.vbs /inslic:\"%P%\\%i\"" + "\r\n";
             cmdWindows = cmdWindows + "@echo on&mode con: cols=20 lines=2" + "\r\n";
             cmdWindows = cmdWindows + "cscript OSPP.VBS /inpkey:%k1%" + "\r\n";
             cmdWindows = cmdWindows + "@mode con: cols=100 lines=30" + "\r\n";
@@ -140,9 +134,9 @@ function CommandSPTActivate(cbbVersion, key) {
         case "11":
             cmdWindows = cmdWindows + "set k1=" + key + "" + "\r\n";
             cmdWindows = cmdWindows + "cls" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles%\\Microsoft Office\\Office16\\ospp.vbs\" cd /d \"%ProgramFiles%\\Microsoft Office\\Office16\"" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\\ospp.vbs\" cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\"" + "\r\n";
-            cmdWindows = cmdWindows + "for /f %i in ('dir /b ..\\root\\Licenses16\\ProPlus2024VL*.xrm-ms') do cscript ospp.vbs /inslic:\"..\\root\\Licenses16\\%i\"" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b /ad \"%ProgramFiles(x86)%\\Microsoft Office\\Licenses16\" 2^>nul ^|^| dir /s /b /ad \"%ProgramFiles%\\Microsoft Office\\Licenses16\" 2^>nul') do set \"P=%a\"" + "\r\n";
+            cmdWindows = cmdWindows + "For /f %i in ('dir /b \"%P%\\ProPlus2024VL_MAK_AE*.xrm-ms\"') do cscript ospp.vbs /inslic:\"%P%\\%i\"" + "\r\n";
             cmdWindows = cmdWindows + "@echo on&mode con: cols=20 lines=2" + "\r\n";
             cmdWindows = cmdWindows + "cscript OSPP.VBS /inpkey:%k1%" + "\r\n";
             cmdWindows = cmdWindows + "@mode con: cols=100 lines=30" + "\r\n";
@@ -185,8 +179,7 @@ function CommandCheckRemove(cbbVersion) {
             cmdWindows = cmdWindows + "start status.txt" + "\r\n";
             break;
         case "2":
-            cmdWindows = cmdWindows + "for %a in (4,5,6) do (if exist \"%ProgramFiles%\\Microsoft Office\\Office1%a\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office1%a\")" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles% (x86)\\Microsoft Office\\Office1%a\\ospp.vbs\" (cd /d \"%ProgramFiles% (x86)\\Microsoft Office\\Office1%a\"))" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
             cmdWindows = cmdWindows + "cls" + "\r\n";
             cmdWindows = cmdWindows + "start WINWORD" + "\r\n";
             cmdWindows = cmdWindows + "for /f \"tokens=2,3,4,5,6 usebackq delims=:/ \" %%a in ('%date% %time%') do echo %%c-%%a-%%b %%d%%e" + "\r\n";
@@ -198,8 +191,7 @@ function CommandCheckRemove(cbbVersion) {
             cmdWindows = cmdWindows + "start status.txt" + "\r\n";
             break;
         case "3":
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles%\\Microsoft Office\\Office14\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office14\")" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office14\\ospp.vbs\" (cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office14\")" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
             cmdWindows = cmdWindows + "start WINWORD" + "\r\n";
             cmdWindows = cmdWindows + "for /f \"tokens=2,3,4,5,6 usebackq delims=:/ \" %%a in ('%date% %time%') do echo %%c-%%a-%%b %%d%%e" + "\r\n";
             cmdWindows = cmdWindows + "echo DATE: %date% >status.txt" + "\r\n";
@@ -210,8 +202,7 @@ function CommandCheckRemove(cbbVersion) {
             cmdWindows = cmdWindows + "start status.txt" + "\r\n";
             break;
         case "4":
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles%\\Microsoft Office\\Office15\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office15\")" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office15\\ospp.vbs\" (cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office15\")" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
             cmdWindows = cmdWindows + "start WINWORD" + "\r\n";
             cmdWindows = cmdWindows + "for /f \"tokens=2,3,4,5,6 usebackq delims=:/ \" %%a in ('%date% %time%') do echo %%c-%%a-%%b %%d%%e" + "\r\n";
             cmdWindows = cmdWindows + "echo DATE: %date% >status.txt" + "\r\n";
@@ -222,8 +213,7 @@ function CommandCheckRemove(cbbVersion) {
             cmdWindows = cmdWindows + "start status.txt" + "\r\n";
             break;
         case "5":
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles%\\Microsoft Office\\Office16\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office16\")" + "\r\n";
-            cmdWindows = cmdWindows + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\\ospp.vbs\" (cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\")" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
             cmdWindows = cmdWindows + "start WINWORD" + "\r\n";
             cmdWindows = cmdWindows + "for /f \"tokens=2,3,4,5,6 usebackq delims=:/ \" %%a in ('%date% %time%') do echo %%c-%%a-%%b %%d%%e" + "\r\n";
             cmdWindows = cmdWindows + "echo DATE: %date% >status.txt" + "\r\n";
@@ -234,8 +224,7 @@ function CommandCheckRemove(cbbVersion) {
             cmdWindows = cmdWindows + "start status.txt" + "\r\n";
             break;
         case "6":
-            cmdWindows = cmdWindows + "for %a in (4,5,6) do (if exist \"%ProgramFiles%\\Microsoft Office\\Office1%a\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office1%a\")" + "\r\n";
-            cmdWindows = cmdWindows + "If exist \"%ProgramFiles% (x86)\\Microsoft Office\\Office1%a\\ospp.vbs\" (cd /d \"%ProgramFiles% (x86)\\Microsoft Office\\Office1%a\"))" + "\r\n";
+            cmdWindows = cmdWindows + "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa" + "\r\n";
             cmdWindows = cmdWindows + "for /f \"tokens= 8\" %b in ('cscript //nologo OSPP.VBS /dstatus ^| findstr /b /c:\"Last 5\"') do (cscript //nologo ospp.vbs /unpkey:%b)" + "\r\n";
             break;
         case "7":

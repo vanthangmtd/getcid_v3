@@ -242,8 +242,7 @@ function GetCommand(cbbVersion, cid) {
         return cmdWindows;
     }
     else if (cbbVersion == "1") {
-        var cmdAllOffice = "for %a in (4,5,6) do (if exist \"%ProgramFiles%\\Microsoft Office\\Office1%a\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office1%a\")\n";
-        cmdAllOffice = cmdAllOffice + "if exist \"%ProgramFiles% (x86)\\Microsoft Office\\Office1%a\\ospp.vbs\" (cd /d \"%ProgramFiles% (x86)\\Microsoft Office\\Office1%a\"))\n";
+        var cmdAllOffice = "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa\n";
         cmdAllOffice = cmdAllOffice + "set CID=" + cid + "\n";
         cmdAllOffice = cmdAllOffice + "cscript //nologo OSPP.VBS /actcid:%CID%\n";
         cmdAllOffice = cmdAllOffice + "cscript.exe OSPP.vbs /act\n";
@@ -258,8 +257,7 @@ function GetCommand(cbbVersion, cid) {
         return cmdAllOffice;
     }
     else if (cbbVersion == "2") {
-        var Office2010 = "if exist \"%ProgramFiles%\\Microsoft Office\\Office14\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office14\")\n";
-        Office2010 = Office2010 + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office14\\ospp.vbs\" (cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office14\")\n";
+        var Office2010 = "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa\n";
         Office2010 = Office2010 + "set CID=" + cid + "\n";
         Office2010 = Office2010 + "cscript //nologo OSPP.VBS /actcid:%CID%\n";
         Office2010 = Office2010 + "cscript.exe OSPP.vbs /act\n";
@@ -274,8 +272,7 @@ function GetCommand(cbbVersion, cid) {
         return Office2010;
     }
     else if (cbbVersion == "3") {
-        var Office2013 = "if exist \"%ProgramFiles%\\Microsoft Office\\Office15\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office15\")\n";
-        Office2013 = Office2013 + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office15\\ospp.vbs\" (cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office15\")\n";
+        var Office2013 = "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa\n";
         Office2013 = Office2013 + "set CID=" + cid + "\n";
         Office2013 = Office2013 + "cscript //nologo OSPP.VBS /actcid:%CID%\n";
         Office2013 = Office2013 + "cscript.exe OSPP.vbs /act\n";
@@ -290,8 +287,7 @@ function GetCommand(cbbVersion, cid) {
         return Office2013;
     }
     else if (cbbVersion == "4") {
-        var Office2016 = "if exist \"%ProgramFiles%\\Microsoft Office\\Office16\\ospp.vbs\" (cd /d \"%ProgramFiles%\\Microsoft Office\\Office16\")\n";
-        Office2016 = Office2016 + "if exist \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\\ospp.vbs\" (cd /d \"%ProgramFiles(x86)%\\Microsoft Office\\Office16\")\n";
+        var Office2016 = "For /f \"delims=\" %a in ('dir /s /b \"%ProgramFiles(x86)%\\Microsoft Office\\ospp.vbs\" 2^>nul ^|^| dir /s /b \"%ProgramFiles%\\Microsoft Office\\ospp.vbs\" 2^>nul') do cd /d %~dpa\n";
         Office2016 = Office2016 + "set CID=" + cid + "\n";
         Office2016 = Office2016 + "cscript //nologo OSPP.VBS /actcid:%CID%\n";
         Office2016 = Office2016 + "cscript.exe OSPP.vbs /act\n";
