@@ -114,7 +114,7 @@ var initSampleSourceMode = ( function() {
 
 		// Depending on the wysiwygarea plugin availability initialize classic or inline editor.
 		if ( wysiwygareaAvailable ) {
-			editor = CKEDITOR.replace( 'editor' );
+			editor = CKEDITOR.replace( 'editorSourceMode' );
 		} else {
 			editorElement.setAttribute( 'contenteditable', 'true' );
 			editor = CKEDITOR.inline( 'editorSourceMode' );
