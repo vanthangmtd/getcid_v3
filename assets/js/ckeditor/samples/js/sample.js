@@ -117,7 +117,7 @@ var initSampleSourceMode = ( function() {
 			editor = CKEDITOR.replace( 'editor' );
 		} else {
 			editorElement.setAttribute( 'contenteditable', 'true' );
-			editor = CKEDITOR.inline( 'editor' );
+			editor = CKEDITOR.inline( 'editorSourceMode' );
 		}
 
 		// ✅ Mặc định vào Source mode khi load web
