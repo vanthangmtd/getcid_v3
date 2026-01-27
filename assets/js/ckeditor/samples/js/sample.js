@@ -84,3 +84,53 @@ var initSampleDecode = (function () {
 	}
 })();
 
+
+var initSampleSourceMode = ( function() {
+	var wysiwygareaAvailable = isWysiwygareaAvailable(),
+		isBBCodeBuiltIn = !!CKEDITOR.plugins.get( 'bbcode' );
+
+	// helper: ép editor ở Source mode, kể cả lúc chưa ready
+	function forceSourceMode( editor ) {
+		// Nếu instance chưa ready thì chờ instanceReady
+		if ( editor.status !== 'ready' ) {
+			editor.on( 'instanceReady', function() {
+				editor.setMode( 'source' );
+			}, null, null, 999 );
+			return;
+		}
+
+		// Ready rồi thì set luôn
+		editor.setMode( 'source' );
+	}
+
+	return function() {
+		var editorElement = CKEDITOR.document.getById('editorSourceMode');
+
+		if ( isBBCodeBuiltIn ) {
+			editorElement.setHtml();
+		}
+
+		var editor;
+
+		// Depending on the wysiwygarea plugin availability initialize classic or inline editor.
+		if ( wysiwygareaAvailable ) {
+			editor = CKEDITOR.replace( 'editor' );
+		} else {
+			editorElement.setAttribute( 'contenteditable', 'true' );
+			editor = CKEDITOR.inline( 'editor' );
+		}
+
+		// ✅ Mặc định vào Source mode khi load web
+		forceSourceMode( editor );
+
+		// (Tuỳ chọn) Expose ra global để bạn gọi sau khi initSample chạy xong
+		window.editorDecode = editor;
+	};
+
+	function isWysiwygareaAvailable() {
+		if ( CKEDITOR.revision == ( '%RE' + 'V%' ) ) {
+			return true;
+		}
+		return !!CKEDITOR.plugins.get( 'wysiwygarea' );
+	}
+})();
