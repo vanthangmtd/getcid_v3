@@ -12,7 +12,7 @@ CKEDITOR.editorConfig = function (config) {
         { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
         { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
         { name: 'styles', items: ['Font', 'FontSize', 'Format', 'Styles'] },
-        { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord',  ] },
+        { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord',] },
         { name: 'document', items: ['Save', 'NewPage', 'ExportPdf', 'Preview', 'Print', '-', 'Templates'] },
     ];
     config.enterMode = CKEDITOR.ENTER_DIV;

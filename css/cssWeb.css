@@ -1,0 +1,92 @@
+﻿.error {
+    color: red;
+}
+
+.product_content h4 {
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin: 0;
+}
+
+.text {
+    font-size: 15px;
+    float: left;
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    line-height: 12px;
+    margin-bottom: 12px;
+}
+
+    .label input[type="checkbox"] {
+        width: 15px;
+        height: 13px;
+        margin-right: 3px;
+    }
+
+    .label:hover {
+        color: #79a206;
+    }
+
+.input {
+    border: 1px solid #e1e1e1;
+    height: 40px;
+    max-width: 100%;
+    padding: 0 20px;
+    background: none;
+    width: 100%;
+}
+
+.button {
+    background: #79a206;
+    border: 0;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    height: 34px;
+    line-height: 26px;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    border-radius: 20px;
+}
+
+.bd-password {
+    display: block;
+    float: right;
+}
+
+.btn-password {
+    position: absolute;
+    top: 0.4rem;
+    right: 1.5rem;
+    z-index: 10;
+    display: block;
+    color: #818a91;
+    cursor: pointer;
+    border: 0;
+    border-radius: 0.25rem;
+}
+
+.breadcrumb {
+    margin-top: 10px;
+}
+
+.text_align_font_size {
+    text-align: center;
+    font-size: larger;
+}
+
+@media only screen and (max-width: 991px) {
+    .main_header {
+        padding: 25px 0px 0px 0px;
+    }
+}

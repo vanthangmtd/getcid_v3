@@ -17,21 +17,21 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 <body id="main">
 	<div id="editorEncode">
 	</div>
-	
-<script>
-	initSampleEncode();
-</script>
-<script>
-	var data;
-	function getHtml(){
-		data = CKEDITOR.instances.editor.getData();
-		console.log(data);
-	}
 
-	var html = "<h1>ABC!</h1><h2>I&#39;m an instance of <a href='https://ckeditor.com'>CKEditor</a>.</h2>"
-	function setHtml(){
-		CKEDITOR.instances.editor.setData(data);
-	}
-</script>
+	<script>
+		initSampleEncode();
+	</script>
+	<script>
+		var data;
+		function getHtml() {
+			data = CKEDITOR.instances.editor.getData();
+			console.log(data);
+		}
+
+		var html = "<h1>ABC!</h1><h2>I&#39;m an instance of <a href='https://ckeditor.com'>CKEditor</a>.</h2>"
+		function setHtml() {
+			CKEDITOR.instances.editor.setData(data);
+		}
+	</script>
 </body>
 </html>
