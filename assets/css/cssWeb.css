@@ -116,7 +116,7 @@
 }
 
 /* set modal body height so iframe can fill it */
-.modal-body {
+.modal-body-iframe {
     padding: 0;
 }
 
