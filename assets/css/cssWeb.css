@@ -94,7 +94,7 @@
 
 /* toolbar fixed height -> main area full remaining height */
 .mainArea {
-    height: calc(90vh - 56px);
+    height: calc(100vh - 56px);
 }
 
 /* editor must have explicit height */
