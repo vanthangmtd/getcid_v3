@@ -94,17 +94,18 @@
 
 /* toolbar fixed height -> main area full remaining height */
 .mainArea {
-    height: calc(100vh - 56px);
+    height: 500px;
+    min-height: 350px;
+    max-height: calc(100vh - 180px);
 }
 
-/* editor must have explicit height */
 .editor {
     height: 100%;
     width: 100%;
     border: 1px solid #dee2e6;
     border-radius: .5rem;
-    overflow: hidden; /* Monaco khuyến nghị */
-    touch-action: none; /* để Monaco tự xử lý gesture */
+    overflow: hidden;
+    touch-action: none;
 }
 
 /* modal iframe full height */
