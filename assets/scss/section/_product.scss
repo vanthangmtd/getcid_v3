@@ -6,16 +6,6 @@
     .tab-content > .tab-pane.active {
         display: block;
     }
-
-    .tab-content > .tab-pane.fade {
-        opacity: 0;
-        transition: opacity .15s linear;
-    }
-
-        .tab-content > .tab-pane.fade.show {
-            opacity: 1;
-        }
-
 .product_area{
     &.mb-95{
         @media #{$tablet-device}{
