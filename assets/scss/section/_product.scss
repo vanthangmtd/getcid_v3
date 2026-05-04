@@ -1,16 +1,21 @@
 /* 03. product section css here */
-.tab-content > .tab-pane.active {
-	display: block;
-	height: auto;
-	opacity: 1;
-	overflow: visible;
+.tab-content > .tab-pane {
+    display: none;
 }
-.tab-content > .tab-pane{
-    display: block;
-    height: 0;
-    opacity: 0;
-    overflow: hidden;;
-}
+
+    .tab-content > .tab-pane.active {
+        display: block;
+    }
+
+    .tab-content > .tab-pane.fade {
+        opacity: 0;
+        transition: opacity .15s linear;
+    }
+
+        .tab-content > .tab-pane.fade.show {
+            opacity: 1;
+        }
+
 .product_area{
     &.mb-95{
         @media #{$tablet-device}{
