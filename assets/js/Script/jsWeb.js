@@ -10,9 +10,11 @@
     ]
 };
 
-$(document).ready(function () {
+
+$(document).ready(function() {
     $("#layout_login").show();
     $("#layout_register").hide();
+
 })
 
 function Get_category_preview(product_id, category_id) {
@@ -20,12 +22,12 @@ function Get_category_preview(product_id, category_id) {
         product_id: product_id,
         category_id: category_id
     })
-        .done(function (resp) {
+        .done(function(resp) {
             $("#modal_box .modal_body").html(resp);
             $("#modal_box").modal("show");
         })
-        .fail(function (result) {
-            if(result.status == 403) ShowAlert('danger', "Access denied."); else ShowAlert('danger', "Sorry, cannot connect server.");
+        .fail(function(result) {
+            if (result.status == 403) ShowAlert('danger', "Access denied."); else ShowAlert('danger', "Sorry, cannot connect server.");
         })
 }
 
@@ -60,10 +62,10 @@ function CopyTextToClipboard(text) {
         FallbackCopyTextToClipboard(text);
         return;
     }
-    navigator.clipboard.writeText(text).then(function () {
+    navigator.clipboard.writeText(text).then(function() {
         console.log('Async: Copying to clipboard was successful!');
         ShowAlert('success', "Copy success.");
-    }, function (err) {
+    }, function(err) {
         console.error('Async: Could not copy text: ', err);
     });
 }
@@ -172,11 +174,19 @@ var interval;
 function Clock() {
     clearInterval(interval);
     var startTime = Date.now();
-    interval = setInterval(function () {
+    interval = setInterval(function() {
         var elapsedTime = Date.now() - startTime;
         $('#timer').html((elapsedTime / 1000).toFixed(3));
     }, 100);
 }
+
+document.addEventListener("shown.bs.tab", function(e) {
+    console.log("Tab shown:", e.target);
+
+    $.fn.dataTable
+        .tables({ visible: true, api: true })
+        .columns.adjust();
+});
 
 function SettingDatatable(table_id) {
     $('#' + table_id).DataTable({
@@ -196,7 +206,7 @@ function SettingDatatable(table_id) {
     });
     var table = $('#' + table_id).DataTable();
     table.order([1, 'desc']).draw();
-    $('#' + table_id + '_wrapper thead tr th').each(function () { $(this).removeClass('text-break text_align_font_size') });
+    $('#' + table_id + '_wrapper thead tr th').each(function() { $(this).removeClass('text-break text_align_font_size') });
 }
 
 function ConfigSettingDatatable(table_id) {
@@ -217,7 +227,7 @@ function ConfigSettingDatatable(table_id) {
     });
     var table = $('#' + table_id).DataTable();
     table.order([0, 'desc']).draw();
-    $('#' + table_id + '_wrapper thead tr th').each(function () { $(this).removeClass('text-break text_align_font_size') });
+    $('#' + table_id + '_wrapper thead tr th').each(function() { $(this).removeClass('text-break text_align_font_size') });
 }
 
 function DeleteRowDatatable(table_id) {
@@ -250,35 +260,16 @@ function AddOrUpdateRowDataTable(table_id, id_row_update, value) {
     }
 }
 
-function AddRowDataTable(table_id, id_row_update, value) {
-    var table = $('#' + table_id).DataTable();
-    table.$('tr.choose').removeAttr('style');
-    table.$('tr.choose').removeClass('choose');
-    value[1] = table.rows().count() + 1;
-    var rowNode = table.row.add(value).draw().node();
-    $(rowNode).addClass('choose');
-    $(rowNode).css('background-color', 'silver');
-    for (let i = 0; i < value.length; i++) {
-        $(rowNode).find('td').eq(i).addClass('text-break');
-    }
-    table.order([1, 'asc']).draw();
-}
-
-function FormatNumber(number){
-	var num = new Number(number);
-	return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-}
-
-(function () {
+(function() {
     /**
      * Tinh chỉ số thập phân của một con số.
      *
-     * @@param {String}  type  Loại điều chỉnh.
-     * @@param {Number}  value Số liệu.
-     * @@param {Integer} exp   Số mũ (the 10 logarithm of the adjustment base).
-     * @@returns {Number} Giá trị đã chỉnh sửa.
-     */
-    function decimalAdjust(type, value, exp) {
+     * @@param {String}  type Loại điều chỉnh.
+             * @@param {Number}  value Số liệu.
+                     * @@param {Integer} exp   Số mũ (the 10 logarithm of the adjustment base).
+                             * @@returns {Number} Giá trị đã chỉnh sửa.
+                                     */
+    function decimalAdjust(type    , value, exp) {
         // Nếu exp có giá trị undefined hoặc bằng không thì...
         if (typeof exp === 'undefined' || +exp === 0) {
             return Math[type](value);
@@ -299,22 +290,22 @@ function FormatNumber(number){
 
     // Làm tròn số thập phân (ra xa giá trị 0)
     if (!Math.ceil10) {
-        Math.ceil10 = function (value, exp) {
+        Math.ceil10 = function(value, exp) {
             return decimalAdjust('ceil', value, exp);
         };
     }
 })();
 
-$(function () {
+$(function() {
     var url = window.location.pathname,
         urlRegExp = new RegExp(url == '/' ? window.location.origin + '/?$' : url.replace(/\/$/, ''));
-    $('.main_menu a').each(function () {
+    $('.main_menu a').each(function() {
         if (urlRegExp.test(this.href.replace(/\/$/, ''))) {
             $(this).parents('li').find('.menu-down').addClass("active");
             $(this).addClass('active');
         }
     });
-    $('.offcanvas_main_menu a').each(function () {
+    $('.offcanvas_main_menu a').each(function() {
         var uri = this.href.replace(/\/$/, '');
         if (uri.includes('#'))
             uri = 'avascript:void(0);';
@@ -325,7 +316,7 @@ $(function () {
             $(this).addClass('active');
         }
     });
-    $('.categories_menu_toggle a').each(function () {
+    $('.categories_menu_toggle a').each(function() {
         if (urlRegExp.test(this.href.replace(/\/$/, ''))) {
             $(this).parents('li').find('.menu-down').addClass("active");
             var childNodes = $(this).parents('.menu_item_children')[0].childNodes;
