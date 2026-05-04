@@ -181,8 +181,6 @@ function Clock() {
 }
 
 document.addEventListener("shown.bs.tab", function(e) {
-    console.log("Tab shown:", e.target);
-
     $.fn.dataTable
         .tables({ visible: true, api: true })
         .columns.adjust();
