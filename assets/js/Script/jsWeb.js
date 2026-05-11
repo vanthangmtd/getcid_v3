@@ -99,6 +99,12 @@ function CopyText(text) {
     }
 }
 
+function parseBool(str) {
+    if (!str) return false;
+    if (typeof str === 'boolean') return str;
+    return str.toString().trim().toLowerCase() === "true";
+}
+
 function DisableItem(listItems) {
     for (let i = 0; i < listItems.length; i++) {
         $("#" + listItems[i] + "").attr('disabled', true);
