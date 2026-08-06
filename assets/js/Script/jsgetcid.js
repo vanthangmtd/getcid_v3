@@ -163,7 +163,7 @@ function GetCidProApi(iid, token) {
                 ShowAlert('danger', resultCid);
             }
             else if (resultCid == "Blocked IID." || resultCid == "Exceeded IID.") {
-                var set_value = "Key blocked. Please contact the unit that provided you with the key for assistance";
+                var set_value = "Key blocked. Please contact the unit that provided you with the key for assistance.";
                 $('#tbxCid').val(set_value);
                 $('#tarCMD').val(set_value);
                 ShowAlert('success', "Get confirmation id success.");
