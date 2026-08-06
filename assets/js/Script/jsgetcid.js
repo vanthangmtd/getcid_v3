@@ -136,7 +136,7 @@ function GetCidPro(iid, token) {
                 turnstile.reset();
                 Enable();
                 $('#tbxCid').val("Unable to connect to the server, please try again later!");
-                ShowAlert('danger' , "Sorry, cannot connect server.");
+                ShowAlert('danger', "Sorry, cannot connect server.");
             }
         });
 }
