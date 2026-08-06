@@ -72,7 +72,7 @@ function GetCid(iid) {
         data: { 'iid': iid },
         headers: {
             'grecaptcha': turnstile.getResponse(),
-            'authenToken': content
+            'X-GetCid-Api-Token': ''
         },
         timeout: 200000
     })
@@ -87,17 +87,23 @@ function GetCid(iid) {
             turnstile.reset();
             Enable();
             $('#tbxCid').val("Unable to connect to the server, please try again later!");
-            if (result.status == 403) ShowAlert('danger', "Access denied."); else ShowAlert('danger', "Sorry, cannot connect server.");
+            if (result.status == 429) {
+                const retryAfter = Number(xhr.getResponseHeader('Retry-After')) || 5;
+                ShowAlert('danger', `Too many requests. ` + `Please retry after ${retryAfter} seconds.`);
+            }
+            else if (result.status == 403)
+                ShowAlert('danger', "Access denied.");
+            else ShowAlert('danger', "Sorry, cannot connect server.");
         });
 }
 
 function GetCidPro(iid, token) {
     $.post({
         url: "/getcid-pro",
-        data: { 'iid': iid, 'token': token },
+        data: { 'iid': iid },
         headers: {
             'grecaptcha': turnstile.getResponse(),
-            'authenToken': content
+            'X-GetCid-Api-Token': token
         },
         timeout: 200000
     })
@@ -110,6 +116,13 @@ function GetCidPro(iid, token) {
         .fail(function (result) {
             if (result.status == 524) {
                 GetCidProApi(iid, token);
+            }
+            else if (result.status == 429) {
+                clearInterval(interval);
+                turnstile.reset();
+                Enable();
+                const retryAfter = Number(xhr.getResponseHeader('Retry-After')) || 5;
+                ShowAlert('danger', `Too many requests. ` + `Please retry after ${retryAfter} seconds.`);
             }
             else if (result.status == 403) {
                 clearInterval(interval);
